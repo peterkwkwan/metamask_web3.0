@@ -18,6 +18,6 @@ export const Button = styled.button<IButtonProps>`
     font-weight: 600;
     box-shadow: ${(props) => props.theme.boxShadow};
     border-radius: ${(props) => props.theme.borderRadius};
-    &:after {
-    }
+    display: flex;
+    align-items: center;
 `;
