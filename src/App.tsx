@@ -1,14 +1,13 @@
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import { Content } from './components/Content';
+import { Navbar } from './components/Navbar';
 import { defaultTheme } from './styles/global';
-
-const Button = styled.button`
-    border-radius: ${(props) => props.theme.borderRadius};
-`;
 
 export default function App() {
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Button type="button">Connect to MetaMask</Button>
+            <Navbar />
+            <Content />
         </ThemeProvider>
     );
 }
