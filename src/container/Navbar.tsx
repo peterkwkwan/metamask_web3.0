@@ -20,7 +20,7 @@ const MetaFox = styled(FoxIcon)`
 `;
 
 const Header = styled.h1`
-    font-family: Helvetica;
+    font-weight: 400;
     margin-left: 16px;
 `;
 
