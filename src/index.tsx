@@ -6,12 +6,12 @@ import './index.css';
 import App from './App';
 
 function getLibrary(provider: ethers.providers.ExternalProvider) {
-  return new ethers.providers.Web3Provider(provider);
+    return new ethers.providers.Web3Provider(provider);
 }
 
 ReactDOM.render(
-  <Web3ReactProvider getLibrary={getLibrary}>
-    <App />
-  </Web3ReactProvider>,
-  document.getElementById('root'),
+    <Web3ReactProvider getLibrary={getLibrary}>
+        <App />
+    </Web3ReactProvider>,
+    document.getElementById('root'),
 );
