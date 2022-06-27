@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Authorized } from './Authorized';
-import { Unauthorized } from './Unauthorized';
+import { Connected } from './Connected';
+import { Disconnected } from './Disconnected';
 
 const Container = styled.div`
     margin-top: 60px;
@@ -25,12 +25,12 @@ export const Content = ({
     return (
         <Container>
             {!connectedMetamask ? (
-                <Unauthorized
+                <Disconnected
                     handleAddressChange={handleAddressChange}
                     unsupportedNetwork={unsupportedNetwork}
                 />
             ) : (
-                <Authorized accountAddress={accountAddress} />
+                <Connected accountAddress={accountAddress} />
             )}
         </Container>
     );

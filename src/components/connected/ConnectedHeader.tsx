@@ -21,7 +21,7 @@ const Body = styled.div`
 interface Props {
     accountAddress: string;
 }
-export const AuthorizedHeader = ({ accountAddress }: Props) => {
+export const ConnectedHeader = ({ accountAddress }: Props) => {
     return (
         <Container>
             <Body>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { AuthorizedHeader } from 'src/components/authorized/AuthorizedHeader';
+import { ConnectedHeader } from 'src/components/connected/ConnectedHeader';
+import { WalletBalance } from 'src/components/connected/WalletBalance';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -15,10 +16,11 @@ interface Props {
     accountAddress: string;
 }
 
-export const Authorized = ({ accountAddress }: Props) => {
+export const Connected = ({ accountAddress }: Props) => {
     return (
         <Container>
-            <AuthorizedHeader accountAddress={accountAddress} />
+            <ConnectedHeader accountAddress={accountAddress} />
+            <WalletBalance accountAddress={accountAddress} />
         </Container>
     );
 };

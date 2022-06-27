@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, VARIANT } from 'src/components/Button';
 import { ButtonIcon } from 'src/components/ButtonIcon';
-import { ErrorMessage } from 'src/components/unauthorized/ErrorMessage';
+import { ErrorMessage } from 'src/components/disconnected/ErrorMessage';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ interface Props {
     unsupportedNetwork: boolean;
 }
 
-export const Unauthorized = ({
+export const Disconnected = ({
     handleAddressChange,
     unsupportedNetwork,
 }: Props) => {
