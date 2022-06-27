@@ -34,7 +34,7 @@ export const Disconnected = ({
         {
             code: pendingRequestCode,
             message:
-                'There is already a pending request for unlocking MetaMask. Please connect using your MetaMask extension in your browser.',
+                'There is already a pending request for unlocking MetaMask. Please connect using your MetaMask browser extension.',
         },
     ];
 
