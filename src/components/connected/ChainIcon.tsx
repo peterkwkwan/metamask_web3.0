@@ -1,11 +1,12 @@
 import React from 'react';
+import { ChainName } from 'src/constants/chainIdMap';
 import styled from 'styled-components';
 import { ReactComponent as BNB } from '../../assets/BNB.svg';
 import { ReactComponent as ETH } from '../../assets/ETH.svg';
 import { ReactComponent as MATIC } from '../../assets/MATIC.svg';
 
 interface Props {
-    coin: string;
+    chainName?: ChainName;
 }
 
 const BNBIcon = styled(BNB)`
@@ -21,18 +22,22 @@ const MATICIcon = styled(MATIC)`
 /* eslint-disable react/jsx-key */
 
 const iconMap = new Map([
-    ['ETH', <ETHIcon />],
-    ['RopstenETH', <ETHIcon />],
-    ['BNB', <BNBIcon />],
-    ['MATIC', <MATICIcon />],
+    [ChainName.ETH, <ETHIcon />],
+    [ChainName.RopstenETH, <ETHIcon />],
+    [ChainName.RinkebyETH, <ETHIcon />],
+    [ChainName.KovanETH, <ETHIcon />],
+    [ChainName.GoerliETH, <ETHIcon />],
+    [ChainName.BNB, <BNBIcon />],
+    [ChainName.MATIC, <MATICIcon />],
+    [undefined, <ETHIcon />],
 ]);
 
 /* eslint-enable react/jsx-key */
 
-export const CoinIcon = ({ coin }: Props) => {
-    const renderCoin = () => {
-        const icon = iconMap.get(coin);
+export const ChainIcon = ({ chainName }: Props) => {
+    const renderChainIcon = () => {
+        const icon = iconMap.get(chainName);
         return icon;
     };
-    return <>{renderCoin()}</>;
+    return <>{renderChainIcon()}</>;
 };

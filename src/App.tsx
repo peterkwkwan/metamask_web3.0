@@ -20,7 +20,7 @@ export default function App() {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const { chainId } = await provider.getNetwork();
 
-        if (!chainIdMap.get(chainId.toString())) {
+        if (!chainIdMap.get(chainId)) {
             setConnectedMetamask(false);
             setUnsupportedNetwork(true);
         }

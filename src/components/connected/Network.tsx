@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import styled from 'styled-components';
-import { chainIdMap } from 'src/constants/chainIdMap';
 
 const Container = styled.div`
     display: flex;
@@ -40,7 +39,6 @@ export const Network = () => {
         const getNetwork = async () => {
             try {
                 const { name, chainId } = await provider.getNetwork();
-                if (!chainIdMap.get(chainId.toString())) return;
 
                 setNetworkName(name);
                 setNetworkId(chainId);
