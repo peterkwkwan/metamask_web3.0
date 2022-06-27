@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, VARIANT } from 'src/components/Button';
 import { ButtonIcon } from 'src/components/ButtonIcon';
 import { ErrorMessage } from 'src/components/disconnected/ErrorMessage';
@@ -22,9 +22,12 @@ export const Disconnected = ({
     unsupportedNetwork,
 }: Props) => {
     const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(
-        unsupportedNetwork ? 'You are on an unsupported network.' : '',
-    );
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (unsupportedNetwork)
+            setErrorMessage('You are on an unsupported network.');
+    }, [unsupportedNetwork]);
 
     const pendingRequestCode = -32002;
     const errorList = [
