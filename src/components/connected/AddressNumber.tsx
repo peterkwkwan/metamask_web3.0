@@ -9,10 +9,12 @@ interface Props {
 
 const Container = styled.div`
     color: ${(props) => props.theme.palette.text.light};
+    text-align: center;
 `;
 
 const Address = styled.h4`
-    display: inline-block;
+    display: block;
+    margin: 4px 0 0;
     color: ${(props) => props.theme.palette.text.main};
 `;
 
@@ -37,7 +39,7 @@ export const AccountNumber = ({ accountAddress }: Props) => {
     };
     return (
         <Container>
-            Address:{' '}
+            Address
             <Address>
                 {hidden
                     ? `${accountAddress.substring(0, 6)}...`
