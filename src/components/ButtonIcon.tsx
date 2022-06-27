@@ -4,6 +4,7 @@ import { ReactComponent as FoxIcon } from '../assets/metamask-fox.svg';
 
 interface Props {
     loading: boolean;
+    unsupportedNetwork: boolean;
 }
 
 const MetaFox = styled(FoxIcon)`
@@ -46,12 +47,29 @@ const Circle = styled.circle`
     animation: animate-stroke 1.5s ease-in-out infinite;
 `;
 
-export const ButtonIcon = ({ loading }: Props) => {
-    return loading ? (
-        <CircularSvg viewBox="25 25 50 50">
-            <Circle cx="50" cy="50" r="20" fill="none" />
-        </CircularSvg>
-    ) : (
-        <MetaFox />
-    );
+const ReloadIcon = styled.span`
+    height: 20px;
+    width: 20px;
+    font-size: 16px;
+    border-radius: 50%;
+    margin-left: 8px;
+    background-color: ${(props) => props.theme.palette.secondary.main};
+    color: ${(props) => props.theme.palette.common.white};
+`;
+
+export const ButtonIcon = ({ loading, unsupportedNetwork }: Props) => {
+    const renderIcon = () => {
+        if (unsupportedNetwork) {
+            return <ReloadIcon>!</ReloadIcon>;
+        }
+        if (loading) {
+            return (
+                <CircularSvg viewBox="25 25 50 50">
+                    <Circle cx="50" cy="50" r="20" fill="none" />
+                </CircularSvg>
+            );
+        }
+        return <MetaFox />;
+    };
+    return renderIcon();
 };

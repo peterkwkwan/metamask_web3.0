@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-enum VARIANT {
+export enum VARIANT {
     PRIMARY,
     SECONDARY,
 }
@@ -11,8 +11,14 @@ interface IButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = styled.button<IButtonProps>`
-    color: ${(props) => props.theme.palette.primary.main};
-    background-color: ${(props) => props.theme.palette.primary.light};
+    color: ${(props) =>
+        props.variant === VARIANT.PRIMARY
+            ? props.theme.palette.primary.main
+            : props.theme.palette.secondary.main};
+    background-color: ${(props) =>
+        props.variant === VARIANT.PRIMARY
+            ? props.theme.palette.primary.light
+            : props.theme.palette.secondary.light};
     border: none;
     padding: 8px 16px;
     font-weight: 600;
