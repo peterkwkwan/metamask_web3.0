@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AccountNumber } from './AddressNumber';
 import { ConnectedAlert } from './ConnectedAlert';
+import { Network } from './Network';
 
 const Container = styled.div`
     position: absolute;
@@ -11,7 +12,6 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-    width: 100%;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -27,6 +27,7 @@ export const AuthorizedHeader = ({ accountAddress }: Props) => {
             <Body>
                 <ConnectedAlert />
                 <AccountNumber accountAddress={accountAddress} />
+                <Network />
             </Body>
         </Container>
     );
