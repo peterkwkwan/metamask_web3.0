@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'src/components/Button';
+import { Button, VARIANT } from 'src/components/Button';
 import { ButtonIcon } from 'src/components/ButtonIcon';
 import { ErrorMessage } from 'src/components/unauthorized/ErrorMessage';
 import styled from 'styled-components';
@@ -14,12 +14,17 @@ const Container = styled.div`
 
 interface Props {
     handleAddressChange: (address: string) => void;
+    unsupportedNetwork: boolean;
 }
 
-export const Unauthorized = ({ handleAddressChange }: Props) => {
+export const Unauthorized = ({
+    handleAddressChange,
+    unsupportedNetwork,
+}: Props) => {
     const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState(
+        unsupportedNetwork ? 'You are on an unsupported network.' : '',
+    );
 
     const pendingRequestCode = -32002;
     const errorList = [
@@ -29,6 +34,16 @@ export const Unauthorized = ({ handleAddressChange }: Props) => {
                 'There is already a pending request for unlocking MetaMask. Please connect using your MetaMask extension in your browser.',
         },
     ];
+
+    const getButtonText = () => {
+        if (unsupportedNetwork) {
+            return 'Reload';
+        }
+        if (loading) {
+            return 'Initializing...';
+        }
+        return 'Connect to MetaMask';
+    };
 
     const handleClick = async () => {
         setLoading(true);
@@ -50,16 +65,24 @@ export const Unauthorized = ({ handleAddressChange }: Props) => {
             } else {
                 setLoading(false);
             }
-            setIsError(true);
         }
     };
     return (
         <Container>
-            <Button onClick={handleClick} disabled={loading}>
-                {loading ? 'Initializing...' : 'Connect to MetaMask'}
-                <ButtonIcon loading={loading} />
+            <Button
+                onClick={handleClick}
+                disabled={loading}
+                variant={
+                    unsupportedNetwork ? VARIANT.SECONDARY : VARIANT.PRIMARY
+                }
+            >
+                {getButtonText()}
+                <ButtonIcon
+                    loading={loading}
+                    unsupportedNetwork={unsupportedNetwork}
+                />
             </Button>
-            {isError && <ErrorMessage errorMessage={errorMessage} />}
+            <ErrorMessage errorMessage={errorMessage} />
         </Container>
     );
 };
