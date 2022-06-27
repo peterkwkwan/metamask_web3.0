@@ -9,6 +9,7 @@ import { ethers } from 'ethers';
 import styled from 'styled-components';
 import { chainIdMap, ChainName } from 'src/constants/chainIdMap';
 import { ChainIcon } from './ChainIcon';
+import { Button, VARIANT } from '../Button';
 
 interface Props {
     accountAddress: string;
@@ -21,7 +22,7 @@ const Container = styled.div`
     align-items: center;
 `;
 const Balance = styled.p`
-    margin: 8px 0 0;
+    margin: 8px 0;
     font-size: 24px;
     color: ${(props) => props.theme.palette.text.light};
 `;
@@ -31,9 +32,14 @@ const Amount = styled.span`
     font-size: 32px;
     font-weight: 600;
 `;
-const Coin = styled.span`
+const BalanceType = styled.span`
     color: ${(props) => props.theme.palette.text.main};
     font-size: 32px;
+`;
+
+const BalanceButton = styled(Button)`
+    width: 250px;
+    justify-content: center;
 `;
 
 export const WalletBalance = ({ accountAddress }: Props) => {
@@ -41,6 +47,8 @@ export const WalletBalance = ({ accountAddress }: Props) => {
         undefined,
     );
     const [chainName, setChainName] = useState<ChainName | undefined>();
+    const [USDActive, setUSDActive] = useState(false);
+
     const prevBalanceRef = useRef('');
 
     const provider = useMemo(
@@ -81,13 +89,19 @@ export const WalletBalance = ({ accountAddress }: Props) => {
         };
     }, [getBalance, provider]);
 
+    const handleClick = () => {
+        setUSDActive((prevState) => !prevState);
+    };
     return (
         <Container>
             <ChainIcon chainName={chainName} />
             <Balance>
                 Balance: <Amount>{ethereumBalance} </Amount>
-                <Coin>{chainName}</Coin>
+                <BalanceType>{USDActive ? 'USD' : chainName}</BalanceType>
             </Balance>
+            <BalanceButton onClick={handleClick} variant={VARIANT.PRIMARY}>
+                {USDActive ? `Switch to ${chainName}` : 'Switch to USD'}
+            </BalanceButton>
         </Container>
     );
 };
