@@ -40,21 +40,21 @@ export const WalletBalance = ({ accountAddress }: Props) => {
     useEffect(() => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const connectWallet = async () => {
+        const getBalance = async () => {
             const { chainId } = await provider.getNetwork();
             if (!chainIdMap.get(chainId.toString())) return;
 
             try {
-                const balance = await provider.getBalance(accountAddress);
-                const bal = ethers.utils.formatEther(balance);
-                setEthereumBalance(bal);
+                const rawBalance = await provider.getBalance(accountAddress);
+                const balance = ethers.utils.formatEther(rawBalance);
                 const coinName = coinNameMap.get(chainId);
+                setEthereumBalance(balance);
                 setCoin(coinName || '');
             } catch (error) {
                 console.error(error);
             }
         };
-        connectWallet();
+        getBalance();
     }, [accountAddress]);
 
     return (
