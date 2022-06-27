@@ -4,21 +4,34 @@ import { ThemeProvider } from 'styled-components';
 import { Content } from './container/Content';
 import { Navbar } from './container/Navbar';
 import { defaultTheme, GlobalStyle } from './styles/global';
+import { chainIdMap } from './constants/chainIdMap';
 
 export default function App() {
     const [connectedMetamask, setConnectedMetamask] = useState(false);
+    const [unsupportedNetwork, setUnsupportedNetwork] = useState(false);
     const [accountAddress, setAccountAddress] = useState('');
 
     const handleAddressChange = (address: string) => {
         setAccountAddress(address);
     };
 
+    const checkIfNetworkSupported = async () => {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const { chainId } = await provider.getNetwork();
+
+        if (!chainIdMap.get(chainId.toString())) {
+            setConnectedMetamask(false);
+            setUnsupportedNetwork(true);
+        }
+    };
+
     const getDetails = async () => {
         try {
             const { ethereum } = window;
             const provider = new ethers.providers.Web3Provider(ethereum);
-            const signer = provider.getSigner();
 
+            const signer = provider.getSigner();
             const addr = await signer.getAddress();
 
             setAccountAddress(addr.toString());
@@ -29,7 +42,8 @@ export default function App() {
     };
 
     useEffect(() => {
-        if (window.ethereum) {
+        const { ethereum } = window;
+        if (ethereum) {
             window.ethereum.on('chainChanged', () => {
                 window.location.reload();
             });
@@ -44,6 +58,7 @@ export default function App() {
             const { ethereum } = window;
 
             if (ethereum) {
+                checkIfNetworkSupported();
                 getDetails();
             }
         };
@@ -60,6 +75,7 @@ export default function App() {
             <Navbar />
             <Content
                 connectedMetamask={connectedMetamask}
+                unsupportedNetwork={unsupportedNetwork}
                 handleAddressChange={handleAddressChange}
                 accountAddress={accountAddress}
             />
