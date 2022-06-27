@@ -11,21 +11,26 @@ const Container = styled.div`
 
 interface Props {
     connectedMetamask: boolean;
+    unsupportedNetwork: boolean;
     handleAddressChange: (address: string) => void;
     accountAddress: string;
 }
 
 export const Content = ({
     connectedMetamask,
+    unsupportedNetwork,
     handleAddressChange,
     accountAddress,
 }: Props) => {
     return (
         <Container>
-            {connectedMetamask ? (
-                <Authorized accountAddress={accountAddress} />
+            {!connectedMetamask ? (
+                <Unauthorized
+                    handleAddressChange={handleAddressChange}
+                    unsupportedNetwork={unsupportedNetwork}
+                />
             ) : (
-                <Unauthorized handleAddressChange={handleAddressChange} />
+                <Authorized accountAddress={accountAddress} />
             )}
         </Container>
     );
