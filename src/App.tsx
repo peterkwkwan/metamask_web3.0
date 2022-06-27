@@ -22,21 +22,31 @@ export default function App() {
             const addr = await signer.getAddress();
 
             setAccountAddress(addr.toString());
+            setConnectedMetamask(true);
         } catch (error) {
             setConnectedMetamask(false);
         }
     };
 
-    const checkIfConnected = async () => {
-        const { ethereum } = window;
-
-        if (ethereum) {
-            setConnectedMetamask(true);
-            getDetails();
+    useEffect(() => {
+        if (window.ethereum) {
+            window.ethereum.on('chainChanged', () => {
+                window.location.reload();
+            });
+            window.ethereum.on('accountsChanged', () => {
+                window.location.reload();
+            });
         }
-    };
+    });
 
     useEffect(() => {
+        const checkIfConnected = async () => {
+            const { ethereum } = window;
+
+            if (ethereum) {
+                getDetails();
+            }
+        };
         checkIfConnected();
     }, []);
 
