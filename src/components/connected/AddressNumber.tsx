@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useWindowDimensions from 'src/hooks/useWindowDimensions';
 import styled from 'styled-components';
 import { ReactComponent as Eye } from '../../assets/eye.svg';
 import { ReactComponent as Hidden } from '../../assets/hidden.svg';
@@ -33,20 +34,31 @@ const Button = styled.button`
 `;
 export const AccountNumber = ({ accountAddress }: Props) => {
     const [hidden, setHidden] = useState(true);
+    const { height, width } = useWindowDimensions();
 
     const handleClick = () => {
         setHidden((prevState) => !prevState);
+    };
+
+    const parseAccountAddress = () => {
+        const condensedAddress = `${accountAddress.substring(0, 6)}...`;
+
+        if (width <= 768) {
+            return condensedAddress;
+        }
+        if (hidden) return condensedAddress;
+        return accountAddress;
     };
     return (
         <Container>
             Address
             <Address>
-                {hidden
-                    ? `${accountAddress.substring(0, 6)}...`
-                    : accountAddress}
-                <Button type="button" onClick={handleClick}>
-                    {hidden ? <EyeIcon /> : <HiddenIcon />}
-                </Button>
+                {parseAccountAddress()}
+                {width > 768 && (
+                    <Button type="button" onClick={handleClick}>
+                        {hidden ? <EyeIcon /> : <HiddenIcon />}
+                    </Button>
+                )}
             </Address>
         </Container>
     );

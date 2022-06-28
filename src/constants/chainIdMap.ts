@@ -26,7 +26,7 @@ enum ExchangeAsset {
     Binance = 'binance-coin',
 }
 
-export const exchangeAssetMap = new Map<number, string>([
+export const exchangeAssetMap = new Map<number, ExchangeAsset>([
     [1, ExchangeAsset.Ethereum],
     [3, ExchangeAsset.Ethereum],
     [4, ExchangeAsset.Ethereum],
