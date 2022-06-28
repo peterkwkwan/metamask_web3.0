@@ -41,16 +41,18 @@ export default function App() {
         }
     };
 
+    const reloadWindow = () => {
+        window.location.reload();
+    };
+
     useEffect(() => {
         const { ethereum } = window;
         if (ethereum) {
-            window.ethereum.on('chainChanged', () => {
-                window.location.reload();
-            });
-            window.ethereum.on('accountsChanged', () => {
-                window.location.reload();
-            });
+            window.ethereum.on('chainChanged', reloadWindow);
         }
+        return () => {
+            ethereum.removeListener('chainChanged', reloadWindow);
+        };
     });
 
     useEffect(() => {
