@@ -16,6 +16,10 @@ export const defaultTheme: DefaultTheme = {
             main: '#D50066',
             light: 'rgba(213,0,102,0.1)',
         },
+        tertiary: {
+            main: '#00AB1F',
+            light: '#D1FED9',
+        },
         text: {
             main: 'rgb(38, 38, 38)',
             light: 'rgba(38, 38, 38, 0.5)',
