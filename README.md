@@ -9,6 +9,8 @@
 
 # Take Home Test (Web3/Frontend)
 
+## Edit (peter kwan): Site is LIVE on Netlify - https://metamask-web3.netlify.app/
+
 ## Overview
 
 This is a take-home test for candidates applying for a frontend developer
