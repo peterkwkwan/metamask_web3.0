@@ -2,6 +2,8 @@
 
 This is a DApp using MetaMask as a login feature.
 
+Site live on Netlify here - https://metamask-web3.netlify.app/
+
 ## Tech stack
 
 1. [React](https://reactjs.org/)
