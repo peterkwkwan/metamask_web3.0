@@ -89,6 +89,9 @@ export const WalletBalance = ({ accountAddress }: Props) => {
         };
     }, [getBalance, provider]);
 
+    // useEffect(() => {
+    //     fetch(`https://api.coinstats.app/public/v1/coins/${asset}?currency=USD`)
+    // }, [])
     const handleClick = () => {
         setUSDActive((prevState) => !prevState);
     };
