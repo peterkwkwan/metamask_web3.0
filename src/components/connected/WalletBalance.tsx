@@ -75,7 +75,7 @@ export const WalletBalance = ({ accountAddress }: Props) => {
             }
             setChainName((name as ChainName) || undefined);
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
     }, [provider, accountAddress]);
 
@@ -107,7 +107,7 @@ export const WalletBalance = ({ accountAddress }: Props) => {
                 });
         };
         fetchUSDRate();
-    }, []);
+    }, [provider]);
 
     const toTwoDecimals = (num: number) => {
         return Math.round((num + Number.EPSILON) * 100) / 100;

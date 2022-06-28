@@ -34,7 +34,7 @@ const Button = styled.button`
 `;
 export const AccountNumber = ({ accountAddress }: Props) => {
     const [hidden, setHidden] = useState(true);
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     const handleClick = () => {
         setHidden((prevState) => !prevState);
