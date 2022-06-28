@@ -43,7 +43,7 @@ export const Network = () => {
                 setNetworkName(name);
                 setNetworkId(chainId);
             } catch (error) {
-                console.error(error);
+                // console.error(error)
             }
         };
         getNetwork();

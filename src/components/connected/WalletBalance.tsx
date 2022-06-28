@@ -75,7 +75,7 @@ export const WalletBalance = ({ accountAddress }: Props) => {
             }
             setChainName((name as ChainName) || undefined);
         } catch (error) {
-            console.error(error);
+            // console.error(error);
         }
     }, [provider, accountAddress]);
 
