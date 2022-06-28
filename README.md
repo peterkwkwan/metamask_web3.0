@@ -1,4 +1,4 @@
-## DApp using MetaMask Login
+## MetaMask Project
 
 This is a DApp using MetaMask as a login feature.
 
