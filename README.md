@@ -1,6 +1,4 @@
-# DApp using MetaMask Login
-
-## Overview
+## DApp using MetaMask Login
 
 This is a DApp using MetaMask as a login feature.
 
