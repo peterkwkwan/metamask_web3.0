@@ -65,8 +65,14 @@ export default function App() {
         checkIfConnected();
     }, []);
 
-    window.ethereum.on('accountsChanged', () => {
-        getDetails();
+    useEffect(() => {
+        const { ethereum } = window;
+        if (ethereum) {
+            ethereum.on('accountsChanged', getDetails);
+        }
+        return () => {
+            ethereum.removeListener('accountsChanged', getDetails);
+        };
     });
 
     return (
