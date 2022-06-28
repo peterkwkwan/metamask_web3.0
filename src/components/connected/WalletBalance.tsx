@@ -7,7 +7,12 @@ import React, {
 } from 'react';
 import { ethers } from 'ethers';
 import styled from 'styled-components';
-import { chainIdMap, ChainName } from 'src/constants/chainIdMap';
+import {
+    chainIdMap,
+    ChainName,
+    exchangeAssetMap,
+} from 'src/constants/chainIdMap';
+import { Coin } from 'src/types/coinstats';
 import { ChainIcon } from './ChainIcon';
 import { Button, VARIANT } from '../Button';
 
@@ -43,13 +48,12 @@ const BalanceButton = styled(Button)`
 `;
 
 export const WalletBalance = ({ accountAddress }: Props) => {
-    const [ethereumBalance, setEthereumBalance] = useState<undefined | string>(
-        undefined,
-    );
+    const [ethereumBalance, setEthereumBalance] = useState<number>(0);
     const [chainName, setChainName] = useState<ChainName | undefined>();
     const [USDActive, setUSDActive] = useState(false);
 
-    const prevBalanceRef = useRef('');
+    const prevBalanceRef = useRef(0);
+    const USDRateRef = useRef(0);
 
     const provider = useMemo(
         () => new ethers.providers.Web3Provider(window.ethereum),
@@ -61,15 +65,15 @@ export const WalletBalance = ({ accountAddress }: Props) => {
 
         try {
             const rawBalance = await provider.getBalance(accountAddress);
-            const balance = ethers.utils.formatEther(rawBalance);
+            const balance = Number(ethers.utils.formatEther(rawBalance));
             const name = chainIdMap.get(chainId);
             if (balance !== prevBalanceRef.current) {
                 // only call setState on balance if diff from previous balance
                 // balance may not change on each new block because there can be no related transactions
                 prevBalanceRef.current = balance;
                 setEthereumBalance(balance);
-                setChainName((name as ChainName) || undefined);
             }
+            setChainName((name as ChainName) || undefined);
         } catch (error) {
             console.error(error);
         }
@@ -89,18 +93,41 @@ export const WalletBalance = ({ accountAddress }: Props) => {
         };
     }, [getBalance, provider]);
 
-    // useEffect(() => {
-    //     fetch(`https://api.coinstats.app/public/v1/coins/${asset}?currency=USD`)
-    // }, [])
+    useEffect(() => {
+        const fetchUSDRate = async () => {
+            const { chainId } = await provider.getNetwork();
+            const asset = exchangeAssetMap.get(chainId);
+
+            fetch(
+                `https://api.coinstats.app/public/v1/coins/${asset}?currency=USD`,
+            )
+                .then((res) => res.json())
+                .then(({ coin }: { coin: Coin }) => {
+                    USDRateRef.current = coin.price;
+                });
+        };
+        fetchUSDRate();
+    }, []);
+
+    const toTwoDecimals = (num: number) => {
+        return Math.round((num + Number.EPSILON) * 100) / 100;
+    };
+
     const handleClick = () => {
         setUSDActive((prevState) => !prevState);
     };
+
     return (
         <Container>
             <ChainIcon chainName={chainName} />
             <Balance>
-                Balance: <Amount>{ethereumBalance} </Amount>
-                <BalanceType>{USDActive ? 'USD' : chainName}</BalanceType>
+                Balance:{' '}
+                <Amount>
+                    {USDActive
+                        ? toTwoDecimals(ethereumBalance * USDRateRef.current)
+                        : toTwoDecimals(ethereumBalance)}
+                </Amount>
+                <BalanceType> {USDActive ? 'USD' : chainName}</BalanceType>
             </Balance>
             <BalanceButton onClick={handleClick} variant={VARIANT.PRIMARY}>
                 {USDActive ? `Switch to ${chainName}` : 'Switch to USD'}
